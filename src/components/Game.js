@@ -1,9 +1,13 @@
 import React from "react";
+import GameHeader from "./GameHeader";
+import { CharactersProvider } from "../context/Characters";
 
 const Game = () => {
   return (
-    <div></div>
-  )
-}
+    <CharactersProvider>
+      <div></div>
+    </CharactersProvider>
+  );
+};
 
-export default Game
+export default Game;

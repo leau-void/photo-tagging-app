@@ -8,6 +8,8 @@ const StyledFooter = styled.footer`
   text-align: center;
   padding: 5px 0;
   order: 99;
+  background: #171010;
+  color: #d8c0c0;
 `;
 
 const StyledGithubLink = styled.a.attrs(() => ({
@@ -15,7 +17,7 @@ const StyledGithubLink = styled.a.attrs(() => ({
   target: "_blank",
 }))`
   opacity: 0.7;
-  color: black;
+  color: inherit;
   &:hover {
     opacity: 1;
   }
