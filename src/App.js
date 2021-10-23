@@ -1,5 +1,4 @@
 import "./App.css";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Game from "./components/Game";
 import { getAuth, signInAnonymously } from "firebase/auth";
@@ -11,7 +10,6 @@ function App() {
 
   return (
     <>
-      <Header />
       <Game />
       <Footer />
     </>

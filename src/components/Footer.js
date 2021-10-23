@@ -10,6 +10,7 @@ const StyledFooter = styled.footer`
   order: 99;
   background: #171010;
   color: #d8c0c0;
+  height: 40px;
 `;
 
 const StyledGithubLink = styled.a.attrs(() => ({
