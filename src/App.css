@@ -3,6 +3,10 @@ body {
   color: #d8c0c0;
 }
 
+html {
+  font-size: min(calc(50% + 1.5vw), 20px);
+}
+
 ::-webkit-scrollbar {
   width: 15px;
   height: 15px;
