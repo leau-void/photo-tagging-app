@@ -50,7 +50,7 @@ const TaggingMenu = ({ lastClick }) => {
 
   return (
     <StyledMenu {...{ pixelRatio, lastClick }}>
-      <TargetBox onClick={(e) => console.log(e.target.offsetParent)} />
+      <TargetBox />
       <DropDown>
         <DropDownOption>Option 1</DropDownOption>
         <DropDownOption>Option 2</DropDownOption>

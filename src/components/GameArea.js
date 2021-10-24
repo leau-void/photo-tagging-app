@@ -1,6 +1,6 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { useElementSize, useToggle } from "../hooks";
+import { useElementSize, usePixelRatio, useToggle } from "../hooks";
 import cursorImg from "../assets/cursor.svg";
 import TaggingMenu from "./TaggingMenu";
 
@@ -16,7 +16,6 @@ const Image = styled.img.attrs((props) => ({
   src: props.imageSrc,
   alt: "Game Image",
   width: props.width - 15 + "px",
-  height: "auto",
 }))`
   display: block;
   position: absolute;
@@ -28,11 +27,19 @@ const Image = styled.img.attrs((props) => ({
 
 const GameArea = ({ imageSrc }) => {
   const containerRef = useRef();
-  const elementSize = useElementSize(containerRef);
+  const containerSize = useElementSize(containerRef);
   const [isTaggingOpen, toggleIsTaggingOpen] = useToggle([false, true], 0);
   const [lastClick, setLastClick] = useState({});
+  const imgRef = useRef();
+  const imgSize = useElementSize(imgRef);
+  const pixelRatio = usePixelRatio();
 
   const clickHandler = (e) => {
+    console.log({
+      x: (e.nativeEvent.offsetX / imgSize.width) * pixelRatio * 2000,
+      y: (e.nativeEvent.offsetY / imgSize.height) * pixelRatio * 8422,
+    });
+
     setLastClick({
       x: e.nativeEvent.offsetX,
       y: e.nativeEvent.offsetY,
@@ -45,9 +52,10 @@ const GameArea = ({ imageSrc }) => {
       <Image
         {...{
           imageSrc,
-          width: elementSize ? elementSize.width : 300,
+          width: containerSize ? containerSize.width : 300,
         }}
         onClick={clickHandler}
+        ref={imgRef}
       />
       {isTaggingOpen && <TaggingMenu {...{ lastClick }} />}
     </StyledGameArea>
