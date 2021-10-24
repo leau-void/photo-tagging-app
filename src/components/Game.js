@@ -9,30 +9,31 @@ import { GameStateProvider } from "../context/GameState";
 import { useToggle } from "../hooks";
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { app, db } from "../firebase-setup";
-import { doc, setDoc, collection, query, getDocs } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 const Game = () => {
   const [modalStatus, toggleModalStatus] = useToggle([true, false], 0);
-  const [level, setLevel] = useState("easy");
+  const [level, setLevel] = useState("medium");
   const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
-    signInAnonymously(getAuth());
+    signInAnonymously(getAuth()).then((result) => {
+      const user = result.user;
+      const docRef = doc(db, "users", user.uid);
+      setDoc(docRef, { uid: user.uid }, { merge: true });
+    });
   }, []);
 
   useEffect(() => {
     (async () => {
-      const charactersDB = [];
-
       const docRef = doc(db, "levels", level);
-      const queryCharacters = query(collection(docRef, "characters"));
+      const docSnap = await getDoc(docRef);
 
-      const querySnapshot = await getDocs(queryCharacters);
-      querySnapshot.forEach((doc) => {
-        charactersDB.push({ name: doc.id, ...doc.data() });
-      });
-      setCharacters(charactersDB);
-      console.log(charactersDB);
+      if (docSnap.exists()) {
+        setCharacters(docSnap.data().characters);
+      } else {
+        console.error("Error fetching doc ", docRef);
+      }
     })();
   }, [level]);
 
