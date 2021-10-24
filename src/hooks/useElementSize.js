@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { usePixelRatio } from ".";
 
 const getSize = (elem, pixelRatio) => ({
   height: elem.offsetHeight * pixelRatio,
@@ -8,16 +9,14 @@ const getSize = (elem, pixelRatio) => ({
 const useElementSize = (ref) => {
   const [size, setSize] = useState();
 
-  const [pixelRatio, setPixelRatio] = useState(window.devicePixelRatio);
+  const pixelRatio = usePixelRatio();
 
-  const handleResize = (e) => {
+  const handleResize = useCallback(() => {
     const newPixelRatio = window.devicePixelRatio;
     if (ref.current && pixelRatio === newPixelRatio) {
       setSize(getSize(ref.current, pixelRatio));
-    } else {
-      setPixelRatio(newPixelRatio);
     }
-  };
+  }, [pixelRatio, ref]);
 
   useEffect(() => {
     // initial size when ref is available
@@ -25,7 +24,7 @@ const useElementSize = (ref) => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [ref]);
+  }, [ref, pixelRatio, size, handleResize]);
 
   return size;
 };
