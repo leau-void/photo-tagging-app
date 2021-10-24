@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import cursorImg from "../assets/cursor.svg";
+import { usePixelRatio } from "../hooks";
 
 const DropDown = styled.div`
   background: rgba(255, 255, 255, 0.7);
@@ -40,13 +41,15 @@ const StyledMenu = styled.div`
   position: absolute;
   z-index: 90;
   cursor: url(${cursorImg}) 50 50, auto;
-  top: ${(props) => props.y + "px"};
-  left: ${(props) => props.x + "px"};
+  top: ${(props) => props.lastClick.y + "px"};
+  left: ${(props) => props.lastClick.x + "px"};
 `;
 
 const TaggingMenu = ({ lastClick }) => {
+  const pixelRatio = usePixelRatio();
+
   return (
-    <StyledMenu {...lastClick}>
+    <StyledMenu {...{ pixelRatio, lastClick }}>
       <TargetBox onClick={(e) => console.log(e.target.offsetParent)} />
       <DropDown>
         <DropDownOption>Option 1</DropDownOption>

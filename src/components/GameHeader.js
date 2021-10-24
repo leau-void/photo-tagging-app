@@ -10,6 +10,7 @@ const StyledHeader = styled.header`
   justify-content: space-around;
   align-items: center;
   background: #171010;
+  z-index: 95;
 `;
 
 const GameHeader = () => {
