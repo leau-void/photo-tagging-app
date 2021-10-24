@@ -37,7 +37,7 @@ const Game = () => {
   }, [level]);
 
   return (
-    <GameStateProvider value={{}}>
+    <GameStateProvider value={{ level }}>
       <CharactersProvider value={characters}>
         <GameHeader />
         <GameInfo />

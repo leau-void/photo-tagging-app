@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import CharactersContext from "../context/Characters";
+import GameStateContext from "../context/GameState";
 
 const StyledModal = styled.div`
   width: 80vw;
@@ -13,9 +15,7 @@ const StyledModal = styled.div`
   left: 10vw;
 `;
 
-const Modal = (props) => {
-  return <StyledModal></StyledModal>;
-};
+const Level = styled.h2``;
 
 const ModalBg = styled.div`
   width: 100vw;
@@ -27,11 +27,18 @@ const ModalBg = styled.div`
 `;
 
 const ModalStartGame = ({ isOpen, toggleIsOpen }) => {
+  const characters = useContext(CharactersContext);
+  const gameState = useContext(GameStateContext);
   return (
     <>
       {isOpen && (
         <>
-          <Modal></Modal>
+          <StyledModal>
+            <Level>Level : {gameState.level}</Level>
+            {characters.map((char, i) => (
+              <div key={i}>{char.name}</div>
+            ))}
+          </StyledModal>
           <ModalBg />
         </>
       )}
