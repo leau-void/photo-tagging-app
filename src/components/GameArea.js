@@ -1,6 +1,7 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { useElementSize } from "../hooks";
+import cursorImg from "../assets/cursor.svg";
 
 const StyledGameArea = styled.main`
   margin-top: 8vh;
@@ -18,6 +19,7 @@ const Image = styled.img.attrs((props) => ({
   width: props.width - 15 + "px",
 }))`
   display: block;
+  cursor: url(${cursorImg}) 50 50, auto;
 `;
 
 const GameArea = ({ imageSrc }) => {
@@ -25,12 +27,13 @@ const GameArea = ({ imageSrc }) => {
   const elementSize = useElementSize(containerRef);
 
   return (
-    <StyledGameArea ref={containerRef}>
+    <StyledGameArea ref={containerRef} cursor={cursorImg}>
       <Image
         {...{
           imageSrc,
           width: elementSize ? elementSize.width : 300,
         }}
+        onClick={(e) => console.log(e.nativeEvent.offsetX)}
       />
     </StyledGameArea>
   );
