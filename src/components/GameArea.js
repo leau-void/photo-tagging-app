@@ -25,20 +25,26 @@ const Image = styled.img.attrs((props) => ({
   cursor: url(${cursorImg}) 50 50, auto;
 `;
 
-const GameArea = ({ imageSrc, lastClick, setLastClick }) => {
+const GameArea = ({
+  imageSrc,
+  isTaggingOpen,
+  toggleIsTaggingOpen,
+  selectionHandler,
+  setRelativePos,
+}) => {
   const containerRef = useRef();
   const containerSize = useElementSize(containerRef);
-  const [isTaggingOpen, toggleIsTaggingOpen] = useToggle([false, true], 0);
   const [offset, setOffset] = useState();
   const imgRef = useRef();
   const imgSize = useElementSize(imgRef);
   const pixelRatio = usePixelRatio();
+  const [lastClick, setLastClick] = useState({});
 
   const clickHandler = (e) => {
-    // console.log({
-    //   x: (e.nativeEvent.offsetX / imgSize.width) * pixelRatio * 2000,
-    //   y: (e.nativeEvent.offsetY / imgSize.height) * pixelRatio * 8422,
-    // });
+    setRelativePos({
+      x: (e.nativeEvent.offsetX / imgSize.width) * pixelRatio * 2000,
+      y: (e.nativeEvent.offsetY / imgSize.height) * pixelRatio * 8422,
+    });
 
     if (!isTaggingOpen)
       setLastClick({
@@ -89,7 +95,9 @@ const GameArea = ({ imageSrc, lastClick, setLastClick }) => {
         onClick={clickHandler}
         ref={imgRef}
       />
-      {isTaggingOpen && <TaggingMenu {...{ lastClick, offset }} />}
+      {isTaggingOpen && (
+        <TaggingMenu {...{ lastClick, offset, selectionHandler }} />
+      )}
     </StyledGameArea>
   );
 };

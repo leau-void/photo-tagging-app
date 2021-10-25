@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import cursorImg from "../assets/cursor.svg";
 import { usePixelRatio } from "../hooks";
+import GameDataContext from "../context/GameData";
 
 const DropDown = styled.div`
   background: rgba(255, 255, 255, 0.7);
@@ -37,7 +38,7 @@ const DropDownOption = styled.div`
   font-size: 1rem;
   border-radius: 4px;
   word-wrap: nowrap;
-  width: max-content;
+  width: 100%;
 
   &:hover {
     transform: scale(1.1);
@@ -65,16 +66,17 @@ const StyledMenu = styled.div`
   left: ${(props) => props.lastClick.x + "px"};
 `;
 
-const TaggingMenu = ({ lastClick, offset }) => {
+const TaggingMenu = ({ lastClick, offset, selectionHandler }) => {
   const pixelRatio = usePixelRatio();
+  const { characters } = useContext(GameDataContext);
 
   return (
     <StyledMenu {...{ pixelRatio, lastClick }}>
       <TargetBox />
-      <DropDown className={offset}>
-        <DropDownOption>Option 1</DropDownOption>
-        <DropDownOption>Option 2</DropDownOption>
-        <DropDownOption>Option 3</DropDownOption>
+      <DropDown onClick={selectionHandler} className={offset}>
+        {characters.map((char, i) => (
+          <DropDownOption key={i}>{char.name}</DropDownOption>
+        ))}
       </DropDown>
     </StyledMenu>
   );

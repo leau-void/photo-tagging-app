@@ -13,11 +13,13 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 
 const Game = () => {
   const [modalStatus, toggleModalStatus] = useToggle([true, false], 0);
+  const [isInfoOpen, toggleIsInfoOpen] = useToggle([false, true], 0);
+  const [isTaggingOpen, toggleIsTaggingOpen] = useToggle([false, true], 0);
   const [level, setLevel] = useState("easy");
   const [mode, toggleMode] = useToggle(["play", "scores"], 0);
   const [characters, setCharacters] = useState([]);
   const [scores, setScores] = useState([]);
-  const [lastClick, setLastClick] = useState({});
+  const [relativePos, setRelativePos] = useState({});
 
   useEffect(() => {
     signInAnonymously(getAuth()).then((result) => {
@@ -32,12 +34,8 @@ const Game = () => {
       const docRef = doc(db, "levels", level);
       const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists()) {
-        if (mode === "play") setCharacters(docSnap.data().characters);
-        if (mode === "scores") setScores(docSnap.data().scores);
-      } else {
-        console.error("Error fetching doc ", docRef);
-      }
+      if (mode === "play") setCharacters(docSnap.data().characters);
+      if (mode === "scores") setScores(docSnap.data().scores);
     })();
   }, [level, mode]);
 
@@ -45,14 +43,40 @@ const Game = () => {
     toggleModalStatus();
   };
 
+  const selectionHandler = async (e) => {
+    toggleIsTaggingOpen();
+
+    const docRef = doc(db, "solutions", e.target.textContent);
+    const docSnap = await getDoc(docRef);
+
+    console.log("docSnap", docSnap.data());
+    console.log({ relativePos });
+
+    const diffX = relativePos.x - docSnap.data().x;
+    const diffY = relativePos.y - docSnap.data().y;
+    console.log({ diffX, diffY });
+
+    if (diffX < 100 && diffX > -100 && diffY < 100 && diffY > -100)
+      console.log("found");
+    else console.log("no");
+  };
+
   return (
     <GameStateProvider
       value={{ level, setLevel, mode, toggleMode, startGameHandler }}>
       <GameDataProvider value={{ characters, scores }}>
         <GameHeader />
-        <GameInfo />
+        <GameInfo {...{ doOpen: isInfoOpen }} />
         <ModalMenu isOpen={modalStatus} toggleIsOpen={toggleModalStatus} />
-        <GameArea {...{ lastClick, setLastClick, imageSrc: gameImg }} />
+        <GameArea
+          {...{
+            selectionHandler,
+            imageSrc: gameImg,
+            isTaggingOpen,
+            toggleIsTaggingOpen,
+            setRelativePos,
+          }}
+        />
       </GameDataProvider>
     </GameStateProvider>
   );

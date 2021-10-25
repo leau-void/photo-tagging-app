@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css, keyframes } from "styled-components";
+import Animate from "../utils/Animate";
 
 const animationOpenGameInfo = keyframes`
 0% {
@@ -24,6 +25,14 @@ const StyledGameInfo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &.closing-setup {
+    animation: none;
+  }
+  &.closing {
+    animation: ${animationRuleOpenGameInfo};
+    animation-direction: reverse;
+  }
 `;
 
 const TextPannel = styled.p`
@@ -32,11 +41,13 @@ const TextPannel = styled.p`
   text-align: center;
 `;
 
-const GameInfo = () => {
+const GameInfo = ({ doOpen }) => {
   return (
-    <StyledGameInfo>
-      <TextPannel>aaa</TextPannel>
-    </StyledGameInfo>
+    <Animate {...{ doOpen, animationDuration: 1000 }}>
+      <StyledGameInfo>
+        <TextPannel>aaa</TextPannel>
+      </StyledGameInfo>
+    </Animate>
   );
 };
 
