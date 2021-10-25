@@ -17,6 +17,7 @@ const Game = () => {
   const [mode, toggleMode] = useToggle(["play", "scores"], 0);
   const [characters, setCharacters] = useState([]);
   const [scores, setScores] = useState([]);
+  const [lastClick, setLastClick] = useState({});
 
   useEffect(() => {
     signInAnonymously(getAuth()).then((result) => {
@@ -51,7 +52,7 @@ const Game = () => {
         <GameHeader />
         <GameInfo />
         <ModalMenu isOpen={modalStatus} toggleIsOpen={toggleModalStatus} />
-        <GameArea imageSrc={gameImg} />
+        <GameArea {...{ lastClick, setLastClick, imageSrc: gameImg }} />
       </GameDataProvider>
     </GameStateProvider>
   );

@@ -29,7 +29,6 @@ const GameArea = ({ imageSrc }) => {
   const containerRef = useRef();
   const containerSize = useElementSize(containerRef);
   const [isTaggingOpen, toggleIsTaggingOpen] = useToggle([false, true], 0);
-  const [lastClick, setLastClick] = useState({});
   const [offset, setOffset] = useState();
   const imgRef = useRef();
   const imgSize = useElementSize(imgRef);
@@ -41,10 +40,11 @@ const GameArea = ({ imageSrc }) => {
     //   y: (e.nativeEvent.offsetY / imgSize.height) * pixelRatio * 8422,
     // });
 
-    setLastClick({
-      x: e.nativeEvent.offsetX,
-      y: e.nativeEvent.offsetY,
-    });
+    if (!isTaggingOpen)
+      setLastClick({
+        x: e.nativeEvent.offsetX,
+        y: e.nativeEvent.offsetY,
+      });
 
     toggleIsTaggingOpen();
   };
