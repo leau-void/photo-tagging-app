@@ -12,7 +12,7 @@ const animationOpenGameInfo = keyframes`
 `;
 
 const animationRuleOpenGameInfo = css`
-  ${animationOpenGameInfo} 0.7s ease-out forwards
+  ${animationOpenGameInfo} 0.4s ease-out forwards
 `;
 
 const StyledGameInfo = styled.div`
@@ -48,7 +48,7 @@ const TextPannel = styled.p`
 
 const GameInfo = ({ doOpen, infoText }) => {
   return (
-    <Animate {...{ doOpen, animationDuration: 700 }}>
+    <Animate {...{ doOpen, animationDuration: 400 }}>
       <StyledGameInfo>
         <TextPannel>{infoText}</TextPannel>
       </StyledGameInfo>

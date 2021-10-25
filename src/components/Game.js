@@ -74,9 +74,6 @@ const Game = () => {
     const docRef = doc(db, "solutions", charName);
     const docSnap = await getDoc(docRef);
 
-    console.log("docSnap", docSnap.data());
-    console.log({ relativePos });
-
     const diffX = relativePos.x - docSnap.data().x;
     const diffY = relativePos.y - docSnap.data().y;
     console.log({ diffX, diffY });
@@ -89,11 +86,17 @@ const Game = () => {
       text = `This was not ${charName}!`;
     }
     setInfoText(text);
-    toggleIsInfoOpen();
-    window.setTimeout(() => {
-      toggleIsInfoOpen(false);
-    }, 3000);
   };
+
+  useEffect(() => {
+    if (!infoText) return;
+    toggleIsInfoOpen(true);
+    const timer = window.setTimeout(() => {
+      toggleIsInfoOpen(false);
+      setInfoText("");
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [infoText]);
 
   return (
     <GameStateProvider
