@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import CharactersContext from "../context/Characters";
+import GameDataContext from "../context/GameData";
 import GameStateContext from "../context/GameState";
 import CharacterCard from "./CharacterCard";
 
@@ -47,25 +47,78 @@ const CharacterWrap = styled.div`
   gap: 1.5rem;
 `;
 
-const Level = styled.h2``;
+const Modes = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const Tab = styled.button`
+  &.active {
+    color: red;
+  }
+`;
+
+const Mode = styled(Tab)``;
+
+const Levels = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const Level = styled(Tab)``;
 
 const StartGameButton = styled.button``;
 
 const ModalStartGame = ({ isOpen, toggleIsOpen }) => {
-  const characters = useContext(CharactersContext);
-  const gameState = useContext(GameStateContext);
+  const { characters, scores } = useContext(GameDataContext);
+  const { level, setLevel, mode, toggleMode, startGameHandler } =
+    useContext(GameStateContext);
+
   return (
     <>
       {isOpen && (
         <>
           <StyledModal>
-            <Level>Difficulty : {gameState.level}</Level>
-            <CharacterWrap>
-              {characters.map((char, i) => (
-                <CharacterCard {...char} key={i} />
-              ))}
-            </CharacterWrap>
-            <StartGameButton>Start Game</StartGameButton>
+            <Modes>
+              <Mode
+                onClick={() => toggleMode()}
+                className={mode === "play" ? "active" : ""}>
+                Play
+              </Mode>
+              <Mode
+                onClick={() => toggleMode()}
+                className={mode === "scores" ? "active" : ""}>
+                Leaderboard
+              </Mode>
+            </Modes>
+            <Levels>
+              <Level
+                onClick={() => setLevel("easy")}
+                className={level === "easy" ? "active" : ""}>
+                Easy
+              </Level>
+              <Level
+                onClick={() => setLevel("medium")}
+                className={level === "medium" ? "active" : ""}>
+                Medium
+              </Level>
+              <Level
+                onClick={() => setLevel("hard")}
+                className={level === "hard" ? "active" : ""}>
+                Hard
+              </Level>
+            </Levels>
+            {mode === "play" && (
+              <CharacterWrap>
+                {characters.map((char, i) => (
+                  <CharacterCard {...char} key={i} />
+                ))}
+              </CharacterWrap>
+            )}
+            {mode === "scores" && <div>Scooooores !! </div>}
+            <StartGameButton onClick={startGameHandler}>
+              Start Game
+            </StartGameButton>
           </StyledModal>
           <ModalBg />
         </>

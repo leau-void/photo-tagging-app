@@ -4,7 +4,7 @@ import ModalStartGame from "./ModalStartGame";
 import GameArea from "./GameArea";
 import GameInfo from "./GameInfo";
 import gameImg from "../assets/the-loc-nar-level.jpg";
-import { CharactersProvider } from "../context/Characters";
+import { GameDataProvider } from "../context/GameData";
 import { GameStateProvider } from "../context/GameState";
 import { useToggle } from "../hooks";
 import { getAuth, signInAnonymously } from "firebase/auth";
@@ -13,8 +13,10 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 
 const Game = () => {
   const [modalStatus, toggleModalStatus] = useToggle([true, false], 0);
-  const [level, setLevel] = useState("medium");
+  const [level, setLevel] = useState("easy");
+  const [mode, toggleMode] = useToggle(["play", "scores"], 0);
   const [characters, setCharacters] = useState([]);
+  const [scores, setScores] = useState([]);
 
   useEffect(() => {
     signInAnonymously(getAuth()).then((result) => {
@@ -30,21 +32,25 @@ const Game = () => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        setCharacters(docSnap.data().characters);
+        if (mode === "play") setCharacters(docSnap.data().characters);
+        if (mode === "scores") setScores(docSnap.data().scores);
       } else {
         console.error("Error fetching doc ", docRef);
       }
     })();
-  }, [level]);
+  }, [level, mode]);
+
+  const startGameHandler = () => {};
 
   return (
-    <GameStateProvider value={{ level }}>
-      <CharactersProvider value={characters}>
+    <GameStateProvider
+      value={{ level, setLevel, mode, toggleMode, startGameHandler }}>
+      <GameDataProvider value={{ characters, scores }}>
         <GameHeader />
         <GameInfo />
         <ModalStartGame isOpen={modalStatus} toggleIsOpen={toggleModalStatus} />
         <GameArea imageSrc={gameImg} />
-      </CharactersProvider>
+      </GameDataProvider>
     </GameStateProvider>
   );
 };
