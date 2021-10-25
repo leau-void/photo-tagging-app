@@ -4,11 +4,15 @@ import styled from "styled-components";
 const StyledCard = styled.div`
   display: grid;
   grid:
-    [row1-start] "name icon" auto [row1-end]
-    [row2-start] "origin icon" auto [row2-end]
-    / auto 90px;
+    [row1-start] "icon name" auto [row1-end]
+    [row2-start] "icon origin" auto [row2-end]
+    / 100px auto;
   gap: 1rem;
   place-items: center;
+
+  &.header {
+    gap: 0.5rem;
+  }
 `;
 
 const Name = styled.h4`
@@ -37,11 +41,17 @@ const CharIcon = styled.img.attrs((props) => ({
   object-fit: cover;
   object-position: 50% -5%;
   grid-area: icon;
+  border-radius: 10px;
+
+  .header & {
+    width: 4rem;
+    height: 4rem;
+  }
 `;
 
-const CharacterCard = ({ name, origin, img }) => {
+const CharacterCard = ({ name, origin, img, header }) => {
   return (
-    <StyledCard>
+    <StyledCard className={header ? "header" : ""}>
       <Name>{name}</Name>
       <Origin>{origin}</Origin>
       <CharIcon img={img} />

@@ -25,7 +25,7 @@ const Image = styled.img.attrs((props) => ({
   cursor: url(${cursorImg}) 50 50, auto;
 `;
 
-const GameArea = ({ imageSrc }) => {
+const GameArea = ({ imageSrc, lastClick, setLastClick }) => {
   const containerRef = useRef();
   const containerSize = useElementSize(containerRef);
   const [isTaggingOpen, toggleIsTaggingOpen] = useToggle([false, true], 0);

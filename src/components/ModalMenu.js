@@ -17,7 +17,7 @@ const ModalBg = styled.div`
 const StyledModal = styled.div`
   max-width: 90vw;
   width: fit-content;
-  max-height: 90vh;
+  height: 90vh;
   position: fixed;
   z-index: 110;
   color: #171010;
@@ -30,8 +30,7 @@ const StyledModal = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  gap: 2rem;
+  justify-content: space-evenly;
 
   @media (min-width: 768px) {
     padding: 2rem 4rem;
@@ -52,6 +51,12 @@ const ScoreWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+`;
+
+const NavWrap = styled.nav`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 const Modes = styled.div`
@@ -86,35 +91,37 @@ const ModalMenu = ({ isOpen, toggleIsOpen }) => {
       {isOpen && (
         <>
           <StyledModal>
-            <Modes>
-              <Mode
-                onClick={() => toggleMode()}
-                className={mode === "play" ? "active" : ""}>
-                Play
-              </Mode>
-              <Mode
-                onClick={() => toggleMode()}
-                className={mode === "scores" ? "active" : ""}>
-                Leaderboard
-              </Mode>
-            </Modes>
-            <Levels>
-              <Level
-                onClick={() => setLevel("easy")}
-                className={level === "easy" ? "active" : ""}>
-                Easy
-              </Level>
-              <Level
-                onClick={() => setLevel("medium")}
-                className={level === "medium" ? "active" : ""}>
-                Medium
-              </Level>
-              <Level
-                onClick={() => setLevel("hard")}
-                className={level === "hard" ? "active" : ""}>
-                Hard
-              </Level>
-            </Levels>
+            <NavWrap>
+              <Modes>
+                <Mode
+                  onClick={() => toggleMode()}
+                  className={mode === "play" ? "active" : ""}>
+                  Play
+                </Mode>
+                <Mode
+                  onClick={() => toggleMode()}
+                  className={mode === "scores" ? "active" : ""}>
+                  Leaderboard
+                </Mode>
+              </Modes>
+              <Levels>
+                <Level
+                  onClick={() => setLevel("easy")}
+                  className={level === "easy" ? "active" : ""}>
+                  Easy
+                </Level>
+                <Level
+                  onClick={() => setLevel("medium")}
+                  className={level === "medium" ? "active" : ""}>
+                  Medium
+                </Level>
+                <Level
+                  onClick={() => setLevel("hard")}
+                  className={level === "hard" ? "active" : ""}>
+                  Hard
+                </Level>
+              </Levels>
+            </NavWrap>
             {mode === "play" && (
               <CharacterWrap>
                 {characters.map((char, i) => (

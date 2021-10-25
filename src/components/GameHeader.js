@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import GameDataContext from "../context/GameData";
+import CharacterCard from "./CharacterCard";
+import { useToggle } from "../hooks";
 
 const StyledHeader = styled.header`
   display: flex;
@@ -13,12 +16,55 @@ const StyledHeader = styled.header`
   z-index: 95;
 `;
 
+const MenuWrap = styled.div`
+  position: relative;
+`;
+
+const CharButton = styled.button`
+  font-size: 1.1rem;
+  border: 1px solid #e2d0d0;
+  color: #e2d0d0;
+  background: transparent;
+  border-radius: 4px;
+  padding: 0.5rem;
+
+  &:hover {
+    color: #171010;
+    background: #e2d0d0;
+  }
+`;
+
+const Menu = styled.div`
+  position: absolute;
+  z-index: 150;
+  right: 0;
+  padding: 1.5rem;
+  width: max-content;
+  border-radius: 4px;
+  background: #696463;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
 const GameHeader = () => {
+  const { characters } = useContext(GameDataContext);
+  const [isMenuOpen, toggleIsMenuOpen] = useToggle([false, true], 0);
+
   return (
     <StyledHeader>
       <div>Game Name</div>
       <div>Timer</div>
-      <button>Characters</button>
+      <MenuWrap>
+        <CharButton onClick={toggleIsMenuOpen}>Characters</CharButton>
+        {isMenuOpen && (
+          <Menu>
+            {characters.map((char, i) => (
+              <CharacterCard header={true} key={i} {...char} />
+            ))}
+          </Menu>
+        )}
+      </MenuWrap>
     </StyledHeader>
   );
 };
