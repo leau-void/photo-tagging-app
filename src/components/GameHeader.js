@@ -67,7 +67,9 @@ const GameHeader = () => {
         <div>Game Name</div>
         <div>Timer</div>
         <MenuWrap>
-          <CharButton onClick={toggleIsMenuOpen}>Characters</CharButton>
+          <CharButton onClick={toggleIsMenuOpen}>
+            Characters left: {characters.filter((char) => !char.found).length}
+          </CharButton>
           {isMenuOpen && (
             <Menu>
               {characters.map((char, i) => (

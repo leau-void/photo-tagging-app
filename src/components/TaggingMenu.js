@@ -74,9 +74,11 @@ const TaggingMenu = ({ lastClick, offset, selectionHandler }) => {
     <StyledMenu {...{ pixelRatio, lastClick }}>
       <TargetBox />
       <DropDown onClick={selectionHandler} className={offset}>
-        {characters.map((char, i) => (
-          <DropDownOption key={i}>{char.name}</DropDownOption>
-        ))}
+        {characters
+          .filter((char) => !char.found)
+          .map((char, i) => (
+            <DropDownOption key={i}>{char.name}</DropDownOption>
+          ))}
       </DropDown>
     </StyledMenu>
   );

@@ -35,13 +35,36 @@ const Game = () => {
       const docRef = doc(db, "levels", level);
       const docSnap = await getDoc(docRef);
 
-      if (mode === "play") setCharacters(docSnap.data().characters);
+      if (mode === "play") {
+        const chars = docSnap
+          .data()
+          .characters.map((char) => ({ ...char, found: false }));
+        setCharacters(chars);
+      }
       if (mode === "scores") setScores(docSnap.data().scores);
     })();
   }, [level, mode]);
 
   const startGameHandler = () => {
     toggleModalStatus();
+  };
+
+  const handleEnd = () => {
+    console.log("end");
+  };
+
+  const handleFound = (charName) => {
+    if (characters.filter((char) => !char.found).length <= 1) handleEnd();
+    else {
+      const charIndex = characters.findIndex((char) => char.name === charName);
+      const newChars = [
+        ...characters.slice(0, charIndex),
+        { ...characters[charIndex], found: true },
+        ...characters.slice(charIndex + 1),
+      ];
+
+      setCharacters(newChars);
+    }
   };
 
   const selectionHandler = async (e) => {
@@ -61,6 +84,7 @@ const Game = () => {
     let text;
     if (diffX < 100 && diffX > -100 && diffY < 100 && diffY > -100) {
       text = `Good job! You have found ${charName}!`;
+      handleFound(charName);
     } else {
       text = `This was not ${charName}!`;
     }
