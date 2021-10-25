@@ -1,11 +1,12 @@
-import React, {useState} from "react";
+import { useState } from "react";
 
 const useToggle = (array, startIndex) => {
-  const [current, setCurrent] = useState(array[startIndex])
+  const [current, setCurrent] = useState(array[startIndex]);
 
-  const toggleCurrent = () => setCurrent(array.find((item) => item !== current))
+  const toggleCurrent = () =>
+    setCurrent(array.find((item) => item !== current));
 
-  return [current, toggleCurrent]
-}
+  return [current, toggleCurrent];
+};
 
-export default useToggle
+export default useToggle;

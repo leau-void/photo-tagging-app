@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { useElementSize, usePixelRatio, useToggle } from "../hooks";
+import { useElementSize, usePixelRatio } from "../hooks";
 import cursorImg from "../assets/cursor.svg";
 import TaggingMenu from "./TaggingMenu";
 

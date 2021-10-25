@@ -32,6 +32,7 @@ const Animate = ({ children, doOpen, animationDuration }) => {
   }, [doOpen, animationDuration]);
 
   const childrenArr = Array.isArray(children) ? children : [children];
+  console.log(isOpen);
   return (
     isOpen && (
       <>

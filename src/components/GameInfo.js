@@ -7,19 +7,19 @@ const animationOpenGameInfo = keyframes`
   top: -100%;
 }
 100% {
-  top: 8vh;
+  top: calc(8vh - 3px);
 }
 `;
 
 const animationRuleOpenGameInfo = css`
-  ${animationOpenGameInfo} 1s ease-out forwards
+  ${animationOpenGameInfo} 0.7s ease-out forwards
 `;
 
 const StyledGameInfo = styled.div`
   width: 100%;
-  height: 50px;
+  height: 70px;
   position: fixed;
-  top: 0;
+  top: calc(8vh - 3px);
   animation: ${animationRuleOpenGameInfo};
   z-index: 90;
   display: flex;
@@ -37,15 +37,20 @@ const StyledGameInfo = styled.div`
 
 const TextPannel = styled.p`
   width: 80%;
-  border-radius: 0 0 4px 4px;
+  border-radius: 0 0 8px 8px;
+  height: 100%;
+  line-height: 70px;
   text-align: center;
+  background: #171010;
+  border: 3px solid #e2d0d0;
+  border-top: 0;
 `;
 
-const GameInfo = ({ doOpen }) => {
+const GameInfo = ({ doOpen, infoText }) => {
   return (
-    <Animate {...{ doOpen, animationDuration: 1000 }}>
+    <Animate {...{ doOpen, animationDuration: 700 }}>
       <StyledGameInfo>
-        <TextPannel>aaa</TextPannel>
+        <TextPannel>{infoText}</TextPannel>
       </StyledGameInfo>
     </Animate>
   );

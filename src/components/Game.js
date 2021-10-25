@@ -6,15 +6,16 @@ import GameInfo from "./GameInfo";
 import gameImg from "../assets/the-loc-nar-level.jpg";
 import { GameDataProvider } from "../context/GameData";
 import { GameStateProvider } from "../context/GameState";
-import { useToggle } from "../hooks";
+import { useToggle, useBoolToggle } from "../hooks";
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { app, db } from "../firebase-setup";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 
 const Game = () => {
-  const [modalStatus, toggleModalStatus] = useToggle([true, false], 0);
-  const [isInfoOpen, toggleIsInfoOpen] = useToggle([false, true], 0);
-  const [isTaggingOpen, toggleIsTaggingOpen] = useToggle([false, true], 0);
+  const [modalStatus, toggleModalStatus] = useBoolToggle(true);
+  const [isInfoOpen, toggleIsInfoOpen] = useBoolToggle(false);
+  const [infoText, setInfoText] = useState("");
+  const [isTaggingOpen, toggleIsTaggingOpen] = useBoolToggle(false);
   const [level, setLevel] = useState("easy");
   const [mode, toggleMode] = useToggle(["play", "scores"], 0);
   const [characters, setCharacters] = useState([]);
@@ -45,8 +46,9 @@ const Game = () => {
 
   const selectionHandler = async (e) => {
     toggleIsTaggingOpen();
+    const charName = e.target.textContent;
 
-    const docRef = doc(db, "solutions", e.target.textContent);
+    const docRef = doc(db, "solutions", charName);
     const docSnap = await getDoc(docRef);
 
     console.log("docSnap", docSnap.data());
@@ -56,9 +58,17 @@ const Game = () => {
     const diffY = relativePos.y - docSnap.data().y;
     console.log({ diffX, diffY });
 
-    if (diffX < 100 && diffX > -100 && diffY < 100 && diffY > -100)
-      console.log("found");
-    else console.log("no");
+    let text;
+    if (diffX < 100 && diffX > -100 && diffY < 100 && diffY > -100) {
+      text = `Good job! You have found ${charName}!`;
+    } else {
+      text = `This was not ${charName}!`;
+    }
+    setInfoText(text);
+    toggleIsInfoOpen();
+    window.setTimeout(() => {
+      toggleIsInfoOpen(false);
+    }, 3000);
   };
 
   return (
@@ -66,7 +76,7 @@ const Game = () => {
       value={{ level, setLevel, mode, toggleMode, startGameHandler }}>
       <GameDataProvider value={{ characters, scores }}>
         <GameHeader />
-        <GameInfo {...{ doOpen: isInfoOpen }} />
+        <GameInfo {...{ doOpen: isInfoOpen, infoText }} />
         <ModalMenu isOpen={modalStatus} toggleIsOpen={toggleModalStatus} />
         <GameArea
           {...{
