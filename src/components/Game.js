@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import GameHeader from "./GameHeader";
-import ModalStartGame from "./ModalStartGame";
+import ModalMenu from "./ModalMenu";
 import GameArea from "./GameArea";
 import GameInfo from "./GameInfo";
 import gameImg from "../assets/the-loc-nar-level.jpg";
@@ -40,7 +40,9 @@ const Game = () => {
     })();
   }, [level, mode]);
 
-  const startGameHandler = () => {};
+  const startGameHandler = () => {
+    toggleModalStatus();
+  };
 
   return (
     <GameStateProvider
@@ -48,7 +50,7 @@ const Game = () => {
       <GameDataProvider value={{ characters, scores }}>
         <GameHeader />
         <GameInfo />
-        <ModalStartGame isOpen={modalStatus} toggleIsOpen={toggleModalStatus} />
+        <ModalMenu isOpen={modalStatus} toggleIsOpen={toggleModalStatus} />
         <GameArea imageSrc={gameImg} />
       </GameDataProvider>
     </GameStateProvider>

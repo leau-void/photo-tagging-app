@@ -11,6 +11,24 @@ const DropDown = styled.div`
   z-index: 99;
   cursor: pointer;
   border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+
+  &.x {
+    transform: translateX(-100%);
+    right: 25px;
+    left: unset;
+  }
+
+  &.y {
+    transform: translateY(-100%);
+    bottom: 25px;
+    top: unset;
+  }
+
+  &.x.y {
+    transform: translate(-100%, -100%);
+  }
 `;
 
 const DropDownOption = styled.div`
@@ -18,6 +36,8 @@ const DropDownOption = styled.div`
   color: #171010;
   font-size: 1rem;
   border-radius: 4px;
+  word-wrap: nowrap;
+  width: max-content;
 
   &:hover {
     transform: scale(1.1);
@@ -45,13 +65,13 @@ const StyledMenu = styled.div`
   left: ${(props) => props.lastClick.x + "px"};
 `;
 
-const TaggingMenu = ({ lastClick }) => {
+const TaggingMenu = ({ lastClick, offset }) => {
   const pixelRatio = usePixelRatio();
 
   return (
     <StyledMenu {...{ pixelRatio, lastClick }}>
       <TargetBox />
-      <DropDown>
+      <DropDown className={offset}>
         <DropDownOption>Option 1</DropDownOption>
         <DropDownOption>Option 2</DropDownOption>
         <DropDownOption>Option 3</DropDownOption>

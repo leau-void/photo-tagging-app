@@ -3,6 +3,7 @@ import styled from "styled-components";
 import GameDataContext from "../context/GameData";
 import GameStateContext from "../context/GameState";
 import CharacterCard from "./CharacterCard";
+import ScoreCard from "./ScoreCard.js";
 
 const ModalBg = styled.div`
   width: 100vw;
@@ -47,6 +48,12 @@ const CharacterWrap = styled.div`
   gap: 1.5rem;
 `;
 
+const ScoreWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
 const Modes = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -69,7 +76,7 @@ const Level = styled(Tab)``;
 
 const StartGameButton = styled.button``;
 
-const ModalStartGame = ({ isOpen, toggleIsOpen }) => {
+const ModalMenu = ({ isOpen, toggleIsOpen }) => {
   const { characters, scores } = useContext(GameDataContext);
   const { level, setLevel, mode, toggleMode, startGameHandler } =
     useContext(GameStateContext);
@@ -115,7 +122,17 @@ const ModalStartGame = ({ isOpen, toggleIsOpen }) => {
                 ))}
               </CharacterWrap>
             )}
-            {mode === "scores" && <div>Scooooores !! </div>}
+            {mode === "scores" && (
+              <ScoreWrap>
+                Scooooores !!
+                {scores
+                  .sort(() => 0)
+                  .slice(0, 10)
+                  .map((score, i) => (
+                    <ScoreCard {...{ score, i }} />
+                  ))}
+              </ScoreWrap>
+            )}
             <StartGameButton onClick={startGameHandler}>
               Start Game
             </StartGameButton>
@@ -127,4 +144,4 @@ const ModalStartGame = ({ isOpen, toggleIsOpen }) => {
   );
 };
 
-export default ModalStartGame;
+export default ModalMenu;
