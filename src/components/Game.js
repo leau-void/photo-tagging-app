@@ -3,16 +3,24 @@ import GameHeader from "./GameHeader";
 import ModalMenu from "./ModalMenu";
 import GameArea from "./GameArea";
 import GameInfo from "./GameInfo";
+import EndGameModal from "./EndGameModal";
 import gameImg from "../assets/the-loc-nar-level.jpg";
 import { GameDataProvider } from "../context/GameData";
 import { GameStateProvider } from "../context/GameState";
-import { useToggle, useBoolToggle } from "../hooks";
+import { useToggle, useBoolToggle, useTimer } from "../hooks";
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { app, db } from "../firebase-setup";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  Timestamp,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
 
 const Game = () => {
-  const [modalStatus, toggleModalStatus] = useBoolToggle(true);
+  const [isModalOpen, toggleIsModalOpen] = useBoolToggle(true);
   const [isInfoOpen, toggleIsInfoOpen] = useBoolToggle(false);
   const [infoText, setInfoText] = useState("");
   const [isTaggingOpen, toggleIsTaggingOpen] = useBoolToggle(false);
@@ -21,14 +29,27 @@ const Game = () => {
   const [characters, setCharacters] = useState([]);
   const [scores, setScores] = useState([]);
   const [relativePos, setRelativePos] = useState({});
+  const [timer, startTimer] = useTimer(66);
+  const [isEndGameModalOpen, toggleIsEndGameModalOpen] = useBoolToggle(false);
+
+  const [user, setUser] = useState();
+  const [userDocRef, setUserDocRef] = useState();
 
   useEffect(() => {
     signInAnonymously(getAuth()).then((result) => {
-      const user = result.user;
-      const docRef = doc(db, "users", user.uid);
-      setDoc(docRef, { uid: user.uid }, { merge: true });
+      setUser(result.user);
     });
   }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    setUserDocRef(doc(db, "users", user.uid));
+  }, [user]);
+
+  useEffect(() => {
+    if (!user || !userDocRef) return;
+    setDoc(userDocRef, { uid: user.uid }, { merge: true });
+  }, [user, userDocRef]);
 
   useEffect(() => {
     (async () => {
@@ -46,11 +67,28 @@ const Game = () => {
   }, [level, mode]);
 
   const startGameHandler = () => {
-    toggleModalStatus();
+    toggleIsModalOpen(false);
+    const startTime = Timestamp.now().toMillis();
+    startTimer(startTime);
+    updateDoc(userDocRef, { start: startTime });
   };
 
-  const handleEnd = () => {
-    console.log("end");
+  const handleEnd = async () => {
+    const end = Timestamp.now().toMillis();
+    toggleIsEndGameModalOpen(true);
+    startTimer(false);
+    updateDoc(userDocRef, { end: end });
+  };
+
+  const updateScores = async () => {
+    const snapshot = await getDoc(userDocRef);
+    const newScore = snapshot.data();
+    const docRef = doc(db, "levels", level);
+    await updateDoc(docRef, {
+      scores: arrayUnion(newScore),
+    });
+    toggleIsEndGameModalOpen(false);
+    toggleIsModalOpen(true);
   };
 
   const handleFound = (charName) => {
@@ -76,7 +114,6 @@ const Game = () => {
 
     const diffX = relativePos.x - docSnap.data().x;
     const diffY = relativePos.y - docSnap.data().y;
-    console.log({ diffX, diffY });
 
     let text;
     if (diffX < 100 && diffX > -100 && diffY < 100 && diffY > -100) {
@@ -96,15 +133,15 @@ const Game = () => {
       setInfoText("");
     }, 3000);
     return () => clearTimeout(timer);
-  }, [infoText]);
+  }, [infoText, toggleIsInfoOpen]);
 
   return (
     <GameStateProvider
       value={{ level, setLevel, mode, toggleMode, startGameHandler }}>
       <GameDataProvider value={{ characters, scores }}>
-        <GameHeader />
+        <GameHeader {...{ timer }} />
         <GameInfo {...{ doOpen: isInfoOpen, infoText }} />
-        <ModalMenu isOpen={modalStatus} toggleIsOpen={toggleModalStatus} />
+        <ModalMenu isOpen={isModalOpen} toggleIsOpen={toggleIsModalOpen} />
         <GameArea
           {...{
             selectionHandler,
@@ -114,6 +151,7 @@ const Game = () => {
             setRelativePos,
           }}
         />
+        {isEndGameModalOpen && <EndGameModal {...{ updateScores }} />}
       </GameDataProvider>
     </GameStateProvider>
   );

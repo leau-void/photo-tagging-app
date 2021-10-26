@@ -3,6 +3,7 @@ import styled from "styled-components";
 import GameDataContext from "../context/GameData";
 import CharacterCard from "./CharacterCard";
 import { useBoolToggle } from "../hooks";
+import formatTime from "../utils/formatTime";
 
 const StyledHeader = styled.header`
   display: flex;
@@ -51,13 +52,14 @@ const Menu = styled.div`
   padding: 1.5rem;
   width: max-content;
   border-radius: 4px;
-  background: #696463;
+  background: #c0a5a5;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  color: #171010;
 `;
 
-const GameHeader = () => {
+const GameHeader = ({ timer }) => {
   const { characters } = useContext(GameDataContext);
   const [isMenuOpen, toggleIsMenuOpen] = useBoolToggle(false);
 
@@ -65,7 +67,7 @@ const GameHeader = () => {
     <>
       <StyledHeader>
         <div>Game Name</div>
-        <div>Timer</div>
+        <div>{formatTime(timer)}</div>
         <MenuWrap>
           <CharButton onClick={toggleIsMenuOpen}>
             Characters left: {characters.filter((char) => !char.found).length}
