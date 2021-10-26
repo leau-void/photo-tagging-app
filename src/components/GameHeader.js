@@ -27,6 +27,8 @@ const BorderWrap = styled.div`
   border-bottom: 3px solid #e2d0d0;
 `;
 
+const Title = styled.h1``;
+
 const MenuWrap = styled.div`
   position: relative;
 `;
@@ -66,7 +68,7 @@ const GameHeader = ({ timer }) => {
   return (
     <>
       <StyledHeader>
-        <div>Game Name</div>
+        <Title>Friend or Foe</Title>
         <div>{formatTime(timer)}</div>
         <MenuWrap>
           <CharButton onClick={toggleIsMenuOpen}>

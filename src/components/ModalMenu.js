@@ -5,6 +5,7 @@ import GameStateContext from "../context/GameState";
 import CharacterCard from "./CharacterCard";
 import ScoreCard from "./ScoreCard.js";
 import ModalBg from "./ModalBg";
+import quickSort from "../utils/quickSort";
 
 const StyledModal = styled.div`
   max-width: 90vw;
@@ -126,8 +127,7 @@ const ModalMenu = ({ isOpen, toggleIsOpen }) => {
             {mode === "scores" && (
               <ScoreWrap>
                 Scooooores !!
-                {scores
-                  .sort(sortScores)
+                {quickSort(scores, sortScores)
                   .slice(0, 10)
                   .map((score, i) => (
                     <ScoreCard key={i} {...{ score, rank: i + 1 }} />
