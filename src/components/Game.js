@@ -8,7 +8,7 @@ import gameImg from "../assets/the-loc-nar-level.jpg";
 import { GameDataProvider } from "../context/GameData";
 import { GameStateProvider } from "../context/GameState";
 import { useToggle, useBoolToggle, useTimer } from "../hooks";
-import { getAuth, signInAnonymously } from "firebase/auth";
+import { getAuth, signInAnonymously, signOut } from "firebase/auth";
 import { app, db } from "../firebase-setup";
 import {
   doc,
@@ -20,6 +20,9 @@ import {
 } from "firebase/firestore";
 
 const Game = () => {
+  // TODO remove before publish //console.log//
+  window.signOut = () => signOut(getAuth());
+  //
   const [isModalOpen, toggleIsModalOpen] = useBoolToggle(true);
   const [isInfoOpen, toggleIsInfoOpen] = useBoolToggle(false);
   const [infoText, setInfoText] = useState("");
@@ -87,6 +90,7 @@ const Game = () => {
     await updateDoc(docRef, {
       scores: arrayUnion(newScore),
     });
+    toggleMode("scores");
     toggleIsEndGameModalOpen(false);
     toggleIsModalOpen(true);
   };
@@ -133,7 +137,7 @@ const Game = () => {
       setInfoText("");
     }, 3000);
     return () => clearTimeout(timer);
-  }, [infoText, toggleIsInfoOpen]);
+  }, [infoText]);
 
   return (
     <GameStateProvider

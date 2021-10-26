@@ -8,8 +8,8 @@ const StyledFooter = styled.footer`
   text-align: center;
   padding: 5px 0;
   order: 99;
-  background: #171010;
-  color: #d8c0c0;
+  background: #252a34;
+  color: #eaeaea;
   height: 40px;
 `;
 

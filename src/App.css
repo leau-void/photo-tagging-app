@@ -1,6 +1,6 @@
 body {
-  background: #171010;
-  color: #e2d0d0;
+  background: #252a34;
+  color: #eaeaea;
 }
 
 html {
@@ -12,18 +12,13 @@ html {
   height: 15px;
 }
 
-::-webkit-scrollbar-button {
-}
-
 ::-webkit-scrollbar-thumb {
-  background: #d8c0c0;
+  background: #b3b3b3;
 }
 ::-webkit-scrollbar-track {
-  background: #423f3e;
-}
-::-webkit-scrollbar-track-piece {
+  background: #3f485a;
 }
 
 ::-webkit-scrollbar-corner {
-  background: #423f3e;
+  background: #3f485a;
 }

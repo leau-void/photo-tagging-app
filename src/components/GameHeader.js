@@ -13,7 +13,7 @@ const StyledHeader = styled.header`
   height: 8vh;
   justify-content: space-around;
   align-items: center;
-  background: #171010;
+  background: #252a34;
   z-index: 95;
 `;
 
@@ -22,9 +22,9 @@ const BorderWrap = styled.div`
   position: fixed;
   top: 0;
   height: calc(8vh + 3px);
-  background: #171010;
+  background: #252a34;
   z-index: 85;
-  border-bottom: 3px solid #e2d0d0;
+  border-bottom: 3px solid #eaeaea;
 `;
 
 const Title = styled.h1``;
@@ -35,15 +35,15 @@ const MenuWrap = styled.div`
 
 const CharButton = styled.button`
   font-size: 1.1rem;
-  border: 1px solid #e2d0d0;
-  color: #e2d0d0;
+  border: 1px solid #eaeaea;
+  color: #eaeaea;
   background: transparent;
   border-radius: 4px;
   padding: 0.5rem;
 
   &:hover {
-    color: #171010;
-    background: #e2d0d0;
+    color: #252a34;
+    background: #eaeaea;
   }
 `;
 
@@ -54,11 +54,11 @@ const Menu = styled.div`
   padding: 1.5rem;
   width: max-content;
   border-radius: 4px;
-  background: #c0a5a5;
+  background: #3f485a;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  color: #171010;
+  color: #eaeaea;
 `;
 
 const GameHeader = ({ timer }) => {
