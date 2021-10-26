@@ -14,7 +14,7 @@ const StyledModal = styled.div`
   z-index: 150;
   color: #171010;
   background: #c4a1a1;
-  border-radius: 4px;
+  border-radius: 8px;
   left: 50%;
   top: 2vh;
   transform: translateX(-50%);
@@ -72,7 +72,7 @@ const EndGameModal = ({ updateScores }) => {
   return (
     <>
       <StyledModal>
-        <Score>{score}</Score>
+        <Score>Wow! You finished the level in {score}ms!</Score>
         <NameForm onSubmit={handleClick}>
           {!name && (
             <>

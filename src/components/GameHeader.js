@@ -29,21 +29,26 @@ const BorderWrap = styled.div`
 
 const Title = styled.h1``;
 
+const Timer = styled.div`
+  font-size: 1.2rem;
+`;
+
 const MenuWrap = styled.div`
   position: relative;
 `;
 
 const CharButton = styled.button`
-  font-size: 1.1rem;
-  border: 1px solid #eaeaea;
-  color: #eaeaea;
+  font-size: 1.2rem;
+  border: 2px solid #08d9d6;
+  color: #08d9d6;
+  font-weight: bold;
   background: transparent;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 0.5rem;
 
   &:hover {
     color: #252a34;
-    background: #eaeaea;
+    background: #08d9d6;
   }
 `;
 
@@ -53,7 +58,7 @@ const Menu = styled.div`
   right: 0;
   padding: 1.5rem;
   width: max-content;
-  border-radius: 4px;
+  border-radius: 8px;
   background: #3f485a;
   display: flex;
   flex-direction: column;
@@ -61,18 +66,21 @@ const Menu = styled.div`
   color: #eaeaea;
 `;
 
-const GameHeader = ({ timer }) => {
+const GameHeader = ({ timer, showTimer }) => {
   const { characters } = useContext(GameDataContext);
   const [isMenuOpen, toggleIsMenuOpen] = useBoolToggle(false);
 
   return (
     <>
       <StyledHeader>
-        <Title>Friend or Foe</Title>
-        <div>{formatTime(timer)}</div>
+        <Title>
+          <span style={{ color: "#08D9D6" }}>Friend</span> or{" "}
+          <span style={{ color: "#FF2E63" }}>Foe</span>
+        </Title>
+        <Timer>{showTimer ? formatTime(timer) : ""}</Timer>
         <MenuWrap>
           <CharButton onClick={toggleIsMenuOpen}>
-            Characters left: {characters.filter((char) => !char.found).length}
+            {characters.filter((char) => !char.found).length}
           </CharButton>
           {isMenuOpen && (
             <Menu>

@@ -34,6 +34,7 @@ const Game = () => {
   const [relativePos, setRelativePos] = useState({});
   const [timer, startTimer] = useTimer(66);
   const [isEndGameModalOpen, toggleIsEndGameModalOpen] = useBoolToggle(false);
+  const [showTimer, setShowTimer] = useBoolToggle(false);
 
   const [user, setUser] = useState();
   const [userDocRef, setUserDocRef] = useState();
@@ -72,12 +73,14 @@ const Game = () => {
   const startGameHandler = () => {
     toggleIsModalOpen(false);
     const startTime = Timestamp.now().toMillis();
+    setShowTimer(true);
     startTimer(startTime);
     updateDoc(userDocRef, { start: startTime });
   };
 
   const handleEnd = async () => {
     const end = Timestamp.now().toMillis();
+    setShowTimer(false);
     toggleIsEndGameModalOpen(true);
     startTimer(false);
     updateDoc(userDocRef, { end: end });
@@ -143,7 +146,7 @@ const Game = () => {
     <GameStateProvider
       value={{ level, setLevel, mode, toggleMode, startGameHandler }}>
       <GameDataProvider value={{ characters, scores }}>
-        <GameHeader {...{ timer }} />
+        <GameHeader {...{ timer, showTimer }} />
         <GameInfo {...{ doOpen: isInfoOpen, infoText }} />
         <ModalMenu isOpen={isModalOpen} toggleIsOpen={toggleIsModalOpen} />
         <GameArea

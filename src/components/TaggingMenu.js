@@ -39,6 +39,7 @@ const DropDownOption = styled.div`
   border-radius: 4px;
   word-wrap: nowrap;
   width: 100%;
+  font-weight: 400;
 
   &:hover {
     transform: scale(1.1);

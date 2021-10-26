@@ -41,8 +41,9 @@ const TextPannel = styled.p`
   height: 100%;
   line-height: 70px;
   text-align: center;
-  background: #171010;
-  border: 3px solid #e2d0d0;
+  background: #252a34;
+  border: 3px solid #eaeaea;
+  font-weight: 500;
   border-top: 0;
 `;
 
