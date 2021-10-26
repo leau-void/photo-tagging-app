@@ -12,7 +12,7 @@ const quickSort = (arr, sortFunc) => {
     if (iB === iA) {
       const firstHalf = arr.slice(0, iB);
       const secHalf = arr.slice(iB + 1);
-à      return [...solve(firstHalf), b, ...solve(secHalf)];
+      return [...solve(firstHalf), b, ...solve(secHalf)];
     }
 
     switch (sortFunc(a, b) > 0) {
