@@ -10,7 +10,7 @@ import Button from "./Button";
 
 const StyledModal = styled.div`
   width: 100vw;
-  min-height: 75vh;
+  min-height: 65vh;
   max-height: 90vh;
   position: fixed;
   z-index: 150;
@@ -43,7 +43,7 @@ const CharacterWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  margin: 1.5rem 0;
+  margin: 2rem 0;
   margin-bottom: auto;
 `;
 
@@ -69,6 +69,7 @@ const NavWrap = styled.nav`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-bottom: ;
 `;
 
 const Modes = styled.div`
@@ -104,7 +105,7 @@ const Levels = styled.div`
 const Level = styled(Tab)``;
 
 const CustomButton = styled(Button)`
-  margin-top: 0;
+  margin: 1.5rem 0;
 `;
 
 const sortScores = (a, b) => a.end - a.start - (b.end - b.start);
