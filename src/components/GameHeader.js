@@ -62,8 +62,11 @@ const Menu = styled.div`
   background: #3f485a;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   color: #eaeaea;
+
+  & > * {
+    margin: 0.5rem 0;
+  }
 `;
 
 const GameHeader = ({ timer, showTimer }) => {

@@ -42,18 +42,23 @@ const CharacterWrap = styled.div`
   width: fit-content;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
   margin: 2rem 0;
   margin-bottom: auto;
+
+  & > * {
+    margin: 0.5rem 0;
+  }
 `;
 
 const ScoreWrap = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   width: 90%;
   margin-top: 4rem;
   margin-bottom: auto;
+  & > * {
+    margin: 0.25rem 0;
+  }
 `;
 
 const ScoreHeader = styled.div`
