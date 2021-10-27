@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/photo-tagging-app/static/css/main.aed2aabe.chunk.css",
+    "main.js": "/photo-tagging-app/static/js/main.16cc4348.chunk.js",
+    "main.js.map": "/photo-tagging-app/static/js/main.16cc4348.chunk.js.map",
+    "runtime-main.js": "/photo-tagging-app/static/js/runtime-main.0d25db9d.js",
+    "runtime-main.js.map": "/photo-tagging-app/static/js/runtime-main.0d25db9d.js.map",
+    "static/css/2.679831fc.chunk.css": "/photo-tagging-app/static/css/2.679831fc.chunk.css",
+    "static/js/2.d47c1427.chunk.js": "/photo-tagging-app/static/js/2.d47c1427.chunk.js",
+    "static/js/2.d47c1427.chunk.js.map": "/photo-tagging-app/static/js/2.d47c1427.chunk.js.map",
+    "index.html": "/photo-tagging-app/index.html",
+    "static/css/2.679831fc.chunk.css.map": "/photo-tagging-app/static/css/2.679831fc.chunk.css.map",
+    "static/css/main.aed2aabe.chunk.css.map": "/photo-tagging-app/static/css/main.aed2aabe.chunk.css.map",
+    "static/js/2.d47c1427.chunk.js.LICENSE.txt": "/photo-tagging-app/static/js/2.d47c1427.chunk.js.LICENSE.txt",
+    "static/media/cursor.a1125529.svg": "/photo-tagging-app/static/media/cursor.a1125529.svg",
+    "static/media/the-loc-nar-level.314cec99.jpg": "/photo-tagging-app/static/media/the-loc-nar-level.314cec99.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0d25db9d.js",
+    "static/css/2.679831fc.chunk.css",
+    "static/js/2.d47c1427.chunk.js",
+    "static/css/main.aed2aabe.chunk.css",
+    "static/js/main.16cc4348.chunk.js"
+  ]
+}
