@@ -27,6 +27,8 @@ const Origin = styled.div`
   align-self: start;
   width: 100%;
   text-align: center;
+  font-style: italic;
+  font-size: 1rem;
 `;
 
 const CharIcon = styled.img.attrs((props) => ({

@@ -6,20 +6,22 @@ import CharacterCard from "./CharacterCard";
 import ScoreCard from "./ScoreCard.js";
 import ModalBg from "./ModalBg";
 import quickSort from "../utils/quickSort";
+import Button from "./Button";
 
 const StyledModal = styled.div`
-  max-width: 90vw;
-  width: fit-content;
-  height: 90vh;
+  width: 100vw;
+  min-height: 75vh;
+  max-height: 90vh;
   position: fixed;
-  z-index: 110;
-  color: #171010;
-  background: #c4a1a1;
-  border-radius: 4px;
+  z-index: 150;
+  color: #eaeaea;
+  font-size: 1.2rem;
+  background: #252a34;
+  border-radius: 8px;
   left: 50%;
-  top: 5vh;
-  transform: translateX(-50%);
-  padding: 2rem 2rem;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,9 +29,12 @@ const StyledModal = styled.div`
 
   @media (min-width: 768px) {
     padding: 2rem 4rem;
+    width: 90vw;
+    font-size: 1.1rem;
   }
   @media (min-width: 1080px) {
     padding: 2rem 6em;
+    width: 60vw;
   }
 `;
 
@@ -38,6 +43,7 @@ const CharacterWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  margin: 1.5rem 0;
 `;
 
 const ScoreWrap = styled.div`
@@ -49,17 +55,29 @@ const ScoreWrap = styled.div`
 const NavWrap = styled.nav`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  width: 100%;
 `;
 
 const Modes = styled.div`
   display: flex;
   justify-content: space-evenly;
+  border-top: 2px solid #ff2e63;
 `;
 
 const Tab = styled.button`
+  flex-grow: 1;
+  background: transparent;
+  border: 2px solid #ff2e63;
+  border-top: 0;
+  color: #eaeaea;
+  padding: 0.5rem;
+  font-weight: 500;
+
+  &:hover:not(.active) {
+    color: #ff2e63;
+  }
   &.active {
-    color: red;
+    background: #ff2e63;
   }
 `;
 
@@ -72,7 +90,9 @@ const Levels = styled.div`
 
 const Level = styled(Tab)``;
 
-const StartGameButton = styled.button``;
+const CustomButton = styled(Button)`
+  margin-top: 0;
+`;
 
 const sortScores = (a, b) => a.end - a.start - (b.end - b.start);
 
@@ -135,9 +155,7 @@ const ModalMenu = ({ isOpen, toggleIsOpen }) => {
               </ScoreWrap>
             )}
             {mode === "play" && (
-              <StartGameButton onClick={startGameHandler}>
-                Start Game
-              </StartGameButton>
+              <CustomButton onClick={startGameHandler}>Start Game</CustomButton>
             )}
           </StyledModal>
           <ModalBg />
