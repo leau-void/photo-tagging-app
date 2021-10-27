@@ -15,15 +15,11 @@ const quickSort = (arr, sortFunc) => {
       return [...solve(firstHalf), b, ...solve(secHalf)];
     }
 
-    switch (sortFunc(a, b) > 0) {
-      case true:
-        arr[iA] = b;
-        arr[iB] = a;
+    if (sortFunc(a, b) > 0) {
+      arr[iA] = b;
+      arr[iB] = a;
 
-        pivot = pivot == "iB" ? "iA" : "iB";
-        break;
-      case false:
-        break;
+      pivot = pivot === "iB" ? "iA" : "iB";
     }
 
     const newIs = {
