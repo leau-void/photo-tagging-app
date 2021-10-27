@@ -44,12 +44,25 @@ const CharacterWrap = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   margin: 1.5rem 0;
+  margin-bottom: auto;
 `;
 
 const ScoreWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 90%;
+  margin-top: 4rem;
+  margin-bottom: auto;
+`;
+
+const ScoreHeader = styled.div`
+  display: grid;
+  grid-template-columns: 60px 2fr 1fr;
+  text-align: center;
+  border-bottom: 2px solid #08d9d6;
+  padding: 0.5rem 0;
+  font-weight: 600;
 `;
 
 const NavWrap = styled.nav`
@@ -146,7 +159,11 @@ const ModalMenu = ({ isOpen, toggleIsOpen }) => {
             )}
             {mode === "scores" && (
               <ScoreWrap>
-                Scooooores !!
+                <ScoreHeader>
+                  <div>Rank</div>
+                  <div>Player name</div>
+                  <div>Score</div>
+                </ScoreHeader>
                 {quickSort(scores, sortScores)
                   .slice(0, 10)
                   .map((score, i) => (
