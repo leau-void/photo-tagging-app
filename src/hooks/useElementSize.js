@@ -17,9 +17,11 @@ const useElementSize = (ref) => {
     }
   }, [pixelRatio, ref]);
 
+  useEffect(() => {}, [ref]);
+
   useEffect(() => {
     // initial size when ref is available
-    window.setTimeout(() => setSize(getSize(ref.current, pixelRatio)), 10);
+    window.setTimeout(() => setSize(getSize(ref.current, pixelRatio)), 200);
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
